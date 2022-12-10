@@ -1,0 +1,71 @@
+Q.1 What is Git and why is it used?
+Answer - 
+Git is the most popular, open-source, widely used, and an example of distributed version control system (DVCS).
+Git is a version control system for tracking changes in computer files and is used to help coordinate work among several people on a project while tracking progress over time. 
+In other words, it’s a tool that facilitates source code management in software development.
+
+Q.2 GIT Commands
+Answer - 
+=> git config    - This command sets the author name and email address respectively to be used with your commits.
+=> git init      - This command is used to start a new repository.
+=> git clone     - This command is used to obtain a repository from an existing URL.
+=> git add       - This command adds a file to the staging area.
+=> git commit    - This command recordsor snapshots the file permanently in the version history.
+=> git diff      - This command shows the file differences b/w two files, branches, etc.
+=> git reset - 
+    #git reset [file]         - This command unstages the file, but it preserves the file contents.
+    #git reset [commit]       - This command undoes all the commits after the specified commit and preserves the changes locally.
+    #git reset –hard [commit] - This command discards all history and goes back to the specified commit.
+    
+=> git status    - This command lists all the files that have to be committed.
+=> git log       - This command is used to list the version history for the current branch.
+=> git show      - This command shows the metadata and content changes of the specified commit.
+=> git branch    - This command lists all the local branches in the current repository.
+=> git checkout  - 
+    #git checkout [branch name]    - This command is used to switch from one branch to another.
+    #git checkout -b [branch name] - This command creates a new branch and also switches to it.
+    
+=> git merge     - This command merges the specified branch’s history into the current branch.
+=> git remote - 
+    #git remote add [variable name] [Remote Server Link] - This command is used to connect your local repository to the remote server.
+    
+=> git push      - This command sends the committed changes of master branch to your remote repository.
+=> git pull      - This command fetches and merges changes on the remote server to your working directory.
+=> git stash     - This command temporarily stores all the modified tracked files.
+    #git stash pop  - This command restores the most recently stashed files.
+    #git stash list - This command lists all stashed changesets.
+    #git stash drop - This command discards the most recently stashed changeset.
+
+Q.3 Differance b/w Git Pull vs Git Fetch vs Git Merge - 
+Answer - 
+1.git fetch is similar to pull but doesn't merge. i.e. 
+it fetches remote updates (refs and objects) but your local stays the same (i.e. origin/master gets updated but master stays the same).
+2.git pull pulls down from a remote and instantly merges.
+Git Pull = Git Fetch + Git Merge
+
+Q.4 Differance b/w Git Reset vs Git Restore vs Git Revert - 
+Answer - 
+1. Git reset and git revert are both useful commands for undoing changes that have been made in previous commits.
+While git reset does this by moving the current head of the branch back to the specified commit, 
+thereby changing the commit history, 
+git revert does this by creating a new commit that undoes the changes in the specified commit and so does not change the history.
+2. restore is about restoring files in the working tree from either the index or another commit.
+
+Q.5 Differance b/w Git Merge vs Git Rebase - 
+Answer - 
+1.Git merge is a command that allows you to merge branches from Git.In Git Merge logs will be showing the complete history of the merging of commits.
+All the commits on the feature branch will be combined as a single commit in the master branch.
+2.Git rebase is a command that allows developers to integrate changes from one branch to another.Logs are linear in Git rebase as the commits are rebased.
+All the commits will be rebased and the same number of commits will be added to the master branch.
+
+
+
+
+
+
+
+
+
+
+
+
