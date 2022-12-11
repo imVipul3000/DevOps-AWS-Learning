@@ -1,0 +1,60 @@
+----------------Script 1 (Variables)--------------------
+#!/bin/sh
+
+echo "File Name: $0"
+if [ $# -lt 2 ]
+then
+echo "kindly provide atleast 2 attribute"
+exit
+fi
+echo "First Parameter : $1"
+echo "Second Parameter : $2"
+echo "Quoted Values: $@"
+echo "Quoted Values: $*"
+echo "Total Number of Parameters : $#"
+----------------------------------------------------------
+----------------------Exit Status-------------------------
+$?  (The exit status of the last command executed.)
+----------------------------------------------------------
+--------------For Loop 1 (Read from arguments)------------
+#!/bin/sh
+
+for TOKEN in $*
+do
+   echo $TOKEN
+done
+------------------------------------------------------------
+---------------For Loop 2 (Read from file-------------------
+#!/bin/sh
+file='/var/SP/vfi/bss/abpwl1/APP_SUPPORT_VOIS/Frontend/DataPatch/vipul_test/mail/file.txt'
+for i in `cat ${file}`
+do
+echo $i
+done
+------------------------------------------------------------
+---------------While Loop 3 (Read from file)----------------
+#!/bin/bash
+read -p "Enter file name : " filename
+while read line
+do
+echo $line
+done < $filename
+------------------------------------------------------------
+--------------Send Mail 1-------------------------
+(echo "From: VFIE_Frontend_WA@vodafone.com"
+  echo "To:vipul.joshi@vodafone.com"
+  echo "Subject: Trail"
+  echo "X-Mailer: htmlmail 1.0"
+  echo "Mime-Version: 1.0"
+  echo "<b>Thanks and Regards</b> <br />"
+  echo "<b>Frontend Application Support</b>"
+) | /usr/sbin/sendmail -t
+----------------Send Mail 2------------------------
+echo "Hi Team,
+Please check error in the script.
+
+Log Path : ${LOG_FILE}
+
+Regards,
+App Support Frontend" | mail -s "<Subject>" "<FROM>" "<TO>"
+------------------------------------------------
