@@ -1,0 +1,16 @@
+1. What is Terraform?
+Terraform is an infrastructure as code tool that allows you to specify cloud and on-premises resources in human-readable configuration files that can be versioned,
+reused, and shared.
+
+2. Terraform Commands - 
+  a) Terraform init - Terraform initializes the code with the terraform init command. The working directory for the Terraform configuration files is created with this command. It is acceptable to execute this command many times.
+          The init command can be used for:
+            Plugin Installation
+            Child Module Installation
+            The backend is being set up.
+  b) terraform refresh - refreshes the state file
+  c) terraform output - views Terraform outputs
+  d) terraform apply - applies the Terraform code and builds stuff
+  e) terraform destroy - destroys what has been built by Terraform
+  f) terraform graph - creates a DOT-formatted graph
+  g) terraform plan - a dry run to see what Terraform will do            
