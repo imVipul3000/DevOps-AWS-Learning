@@ -8,9 +8,12 @@ reused, and shared.
             Plugin Installation
             Child Module Installation
             The backend is being set up.
-  b) terraform refresh - refreshes the state file
-  c) terraform output - views Terraform outputs
-  d) terraform apply - applies the Terraform code and builds stuff
-  e) terraform destroy - destroys what has been built by Terraform
-  f) terraform graph - creates a DOT-formatted graph
-  g) terraform plan - a dry run to see what Terraform will do            
+  b) terraform refresh - refreshes the state file.
+  c) terraform output - views Terraform outputs.
+  d) terraform apply - applies the Terraform code and builds stuff.
+  e) terraform destroy - destroys what has been built by Terraform.
+  f) terraform graph - creates a DOT-formatted graph.
+  g) terraform plan - a dry run to see what Terraform will do.
+  h) terraform validate - validate the syntax of terraform file.
+  
+  3. 
