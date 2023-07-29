@@ -1,0 +1,24 @@
+Install terraform
+Install GIT
+Download Atlantis - 
+  wget -q https://github.com/runatlantis/atlantis/releases/download/v0.19.2/atlantis_linux_amd64.zip
+  ls -lrt atlantis_linux_amd64.zip
+Unzip -
+  unzip atlantis_linux_amd64.zip
+Copy binaries -
+  cp atlantis /usr/bin/
+Check version -
+  atlantis version
+
+GitHub Token Generate
+
+Test Atlantis - 
+atlantis testdrive  (in this command we need to provide github username & github token, atlantis will auto create a repo and create PR to test)
+
+Run Atlantis - 
+atlantis server \
+--gh-user="<github-user>" \
+--gh-token="<github-token>" \
+--gh-webhook-secret="<secret that we provided while creation of githu token>" \
+--repo-allowlist="<github repo name that we want to allow atlantis, exa-'github.com/vipuljoshi-ksolves/Ksolves-Project'" --automerge
+
