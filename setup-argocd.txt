@@ -1,0 +1,10 @@
+1. install - 
+  kubectl create namespace argocd
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+2. surf it as loadbalancer service
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+3. port forward - 
+  kubectl port-forward svc/argocd-server -n argocd 8080:443
+4. password - 
+  kubectl edit secret argocd-initial-admin-secret -n argocd
+  decode it as it is base64 encoded.
