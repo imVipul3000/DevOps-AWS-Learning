@@ -1,8 +1,8 @@
 Install ingress controller - for demo we'll choose nginx-controller
-1. kubectl create namespace ingress-nginx
-2. helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-3. helm repo update
-4. helm install nginx-ingress ingress-nginx/ingress-nginx -n ingress-nginx
+1. "kubectl create namespace ingress-nginx"
+2. "helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx"
+3. "helm repo update"
+4. "helm install nginx-ingress ingress-nginx/ingress-nginx -n ingress-nginx"
 ingress-controller should be installed. we can verify by "kubectl get all -n ingress-nginx"
 5. check controller class name - "kubectl describe pod/<podname> -n ingress-nginx" (in above case it should be "nginx")
 6. create sample deployment and service - 
