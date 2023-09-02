@@ -1,0 +1,87 @@
+Install ingress controller - for demo we'll choose nginx-controller
+1. kubectl create namespace ingress-nginx
+2. helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+3. helm repo update
+4. helm install nginx-ingress ingress-nginx/ingress-nginx -n ingress-nginx
+ingress-controller should be installed. we can verify by "kubectl get all -n ingress-nginx"
+5. check controller class name - "kubectl describe pod/<podname> -n ingress-nginx" (in above case it should be "nginx")
+6. create sample deployment and service - 
+apple.yaml - 
+  kind: Pod
+  apiVersion: v1
+  metadata:
+    name: apple-app
+    labels:
+      app: apple
+  spec:
+    containers:
+      - name: apple-app
+        image: hashicorp/http-echo
+        args:
+          - "-text=apple"
+  
+  ---
+  
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: apple-service
+  spec:
+    selector:
+      app: apple
+    ports:
+      - port: 5678 # Default port for image
+
+banana.yaml - 
+  kind: Pod
+  apiVersion: v1
+  metadata:
+    name: banana-app
+    labels:
+      app: banana
+  spec:
+    containers:
+      - name: banana-app
+        image: hashicorp/http-echo
+        args:
+          - "-text=banana"
+  
+  ---
+  
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: banana-service
+  spec:
+    selector:
+      app: banana
+    ports:
+      - port: 5678 # Default port for image
+
+7. create inress.yaml - 
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: minimal-ingress
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+  spec:
+    ingressClassName: nginx
+    rules:
+      - host: "loadbalancer dns created from nginx-controller"
+        http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: apple-service
+                  port:
+                    number: 5678
+            - path: /banana
+              pathType: Prefix
+              backend:
+                service:
+                  name: banana-service
+                  port:
+                    number: 5678
