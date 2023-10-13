@@ -79,7 +79,7 @@ http://local_ip_addr:9100    (enable port 9100 in SG)
 
 3. Main Server -
 ----------Configure Prometheus to Monitor Client Nodes-------
-under scrape_configs - 
+under scrape_configs under prometheus.yml- 
 ======
 ...
 - job_name: "remote_collector"
