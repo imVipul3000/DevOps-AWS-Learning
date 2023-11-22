@@ -27,7 +27,7 @@ eksctl create iamserviceaccount \
   --name aws-load-balancer-controller \
   --namespace kube-system \
   --attach-policy-arn arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy \
-  -- cluster eks-prod \
+  --cluster eks-prod \
   --approve
 ==================================
 aws eks --region ap-southeast-2 update-kubeconfig --name eks-prod
