@@ -52,8 +52,8 @@ storage_config:
     s3forcepathstyle: true
     bucketnames: loki-aws-trial
     region: us-east-1
-    access_key_id: "AKIAUWRHK2CYJGOKEYFM"
-    secret_access_key: "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"
+    access_key_id: "key"
+    secret_access_key: "secret"
     insecure: false
     sse_encryption: false
   boltdb_shipper:
