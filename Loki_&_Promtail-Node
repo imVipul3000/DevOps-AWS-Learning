@@ -12,7 +12,58 @@ sudo apt-get install -y loki
 sudo systemctl start loki    (localhost:3100/metrics)
 sudo systemctl enable loki
 ---------------------------------
+if we want to store loki logs to aws s3 - 
+edit /etc/loki/config.yml as - 
+------------------------------------
+auth_enabled: false
 
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+
+common:
+  instance_addr: 127.0.0.1
+  path_prefix: /tmp/loki
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 100
+
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: s3
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+      
+storage_config:
+  aws:
+    s3: s3://us-east-1/loki-aws-trial
+    s3forcepathstyle: true
+    bucketnames: loki-aws-trial
+    region: us-east-1
+    access_key_id: "AKIAUWRHK2CYJGOKEYFM"
+    secret_access_key: "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"
+    insecure: false
+    sse_encryption: false
+  boltdb_shipper:
+    shared_store: s3
+    cache_ttl: 24h
+
+ruler:
+  alertmanager_url: http://localhost:9093
+---------------------------------------------------------------
+##########################################3
 Install Promtail - 
 ----------------Download and install Promtail--------------
 wget https://github.com/grafana/loki/releases/latest/download/promtail-linux-amd64.zip
