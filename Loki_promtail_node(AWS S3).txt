@@ -1,0 +1,93 @@
+Install loki - 
+---------------Add Loki repository and GPG key------------------
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y "deb [arch=amd64] https://packages.grafana.com/oss/deb stable main"
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+----------------------------------
+---------------Update package list and install Loki---------------
+sudo apt-get update
+sudo apt-get install -y loki
+---------------------------------
+---------------Start Loki service--------------------
+sudo systemctl start loki    (localhost:3100/metrics)
+sudo systemctl enable loki
+---------------------------------
+if we want to store loki logs to aws s3 - 
+edit /etc/loki/config.yml as - 
+------------------------------------
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+
+common:
+  instance_addr: 127.0.0.1
+  path_prefix: /tmp/loki
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 100
+
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: s3
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+      
+storage_config:
+  aws:
+    s3: s3://us-east-1/loki-aws-trial
+    s3forcepathstyle: true
+    bucketnames: loki-aws-trial
+    region: us-east-1
+    access_key_id: "key"
+    secret_access_key: "secret"
+    insecure: false
+    sse_encryption: false
+  boltdb_shipper:
+    shared_store: s3
+    cache_ttl: 24h
+
+ruler:
+  alertmanager_url: http://localhost:9093
+---------------------------------------------------------------
+##########################################3
+Install Promtail - 
+----------------Download and install Promtail--------------
+wget https://github.com/grafana/loki/releases/latest/download/promtail-linux-amd64.zip
+unzip promtail-linux-amd64.zip
+sudo mv promtail-linux-amd64 /usr/local/bin/promtail
+sudo chmod a+x /usr/local/bin/promtail
+----------------------------------
+----------------Create a configuration file for Promtail----------------
+sudo nano /etc/promtail/promtail.yml    (change localhost to loki server ip incase loki installed on other server)
+clients:
+  - url: http://localhost:3100/loki/api/v1/push
+
+positions:
+  filename: /tmp/positions.yaml
+
+scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*log
+----------------Start Promtail service-------------------
+sudo systemctl start promtail
+sudo systemctl enable promtail
+----------------------------------
