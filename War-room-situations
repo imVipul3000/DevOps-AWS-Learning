@@ -1,0 +1,55 @@
+Networking/Latency - 
+1. A Tesla service depends on Kafka + Redis. Both look healthy but requests are intermittently failing. What’s your debug path before escalating to app teams?
+2. You see a gradual increase in latency across an NGINX ingress, but CPU/memory are stable. What’s your next move?
+3. 30% of Tesla Superchargers in Europe report “backend unavailable”, but cloud dashboards show all green. How would you isolate whether it’s DNS, TLS, or routing drift?
+4. Your team reports slow API response times, but CPU, memory, and request volume look stable. What non-obvious infra metrics do you check before suspecting the app layer?
+5. Payments API latency spikes by 600ms only in one region. No new deploys. DNS propagation, load balancers, and instances are all healthy. Where do you start your RCA?
+6. During a deployment, gRPC connections start randomly timing out. Load balancer metrics show normal traffic. How do you debug this at OSI layer 4 and below, and how do you isolate it between Envoy, network stack, and kernel sockets?
+7. You’ve got an intermittent 10-second delay in cart updates only for Android app users. Where do you start: CDN, API gateway, client SDK, DB lock, or cache churn?
+8. Explain your approach to debugging DNS resolution inside pods when CoreDNS itself looks healthy.
+9. An ALB is marked healthy, but 20% of requests return 502s. How do you isolate whether it’s the target group, the NLB hop, or the app?
+10. A customer reports latency only in ap-south-1. All dashboards are green. What do you check at the VPC + network layer?
+
+
+Debug - 
+1. How would you debug a pod stuck in “ContainerCreating” during deployment? What are your next 3 CLI commands?
+2. You deployed a Cilium update, and suddenly inter-pod communication breaks for one namespace. What’s your triage approach to confirm root cause?
+3. One app’s pods restart daily at 2 AM - no crash loops, no OOMs. Where do you start: CronJobs, readiness probes, HPA events, or the node scheduler?
+4. During an overnight release, an Ansible playbook wipes a shared NFS mount. How do you triage, contain, and recover without triggering client downtime?
+5. Your Kubernetes cluster’s etcd snapshot restore works, but pods don’t reconcile properly afterward. What’s your recovery approach?
+6. A new container image passed CI but failed readiness probes in production. No logs, no crashloops - just hangs. How would you debug this, step by step?
+7. During an SRE review, your system passes SLO targets but still experiences user complaints. What hidden reliability gaps could explain this discrepancy?
+8. Your Kubernetes nodes intermittently go NotReady during morning trading hours, but kubelet logs look clean. What’s your investigation path: node OS, CNI, control-plane, or market load pattern?
+9. EBS volumes detach mid-transaction under high I/O bursts. What kernel-level or IOPS-limit behaviors can trigger this, and how would you design retries to avoid data corruption?
+10. User posts intermittently fail to appear on feeds across regions. You trace it to replication lag in MySQL shards, but CPU and IO look fine. What’s your deep-dive debugging path from schema to kernel?
+11. A misconfigured service mesh policy causes mTLS handshake failures across 1,200 pods. Describe your live RCA: what metrics do you check, what gets rolled back, and how do you communicate impact internally?
+12. During an OS release, global TLS cert rotation misfires. Some services use stale certs. How do you coordinate atomic certificate rotation across tens of thousands of microservices without downtime?
+13. Persistent volumes (EBS) attach to pods, but randomly enter read-only mode under load. What would you trace at the kernel level or CSI driver, and how?
+14. During a Flipkart flash sale, K8s pods fail liveness probes at scale. Turns out the sidecar metrics exporter is spiking CPU. Your RCA and live hotfix?
+15. How would you auto-scale GPU nodes for training workloads while ensuring you don’t waste $30–$40/hour on idle GPUs?
+16. Persistent storage for datasets starts spiking at 200ms+ latency. How do you identify whether the issue is in the storage backend, VPC networking, or the GPU node pipeline?
+17. Kafka consumer lag shoots up after a canary rollout, but CPU/memory metrics are normal. Where do you start?
+18. HPA is scaling pods, but they remain Pending even with node capacity. Cluster vs scheduler vs CNI, how do you debug?
+19. What happens when systemd units fail intermittently on EKS nodes? How do you detect and heal?
+
+
+
+Security - 
+1. What’s your approach to handling secrets rotation in Kubernetes and CI/CD environments?
+
+Design - 
+1. Describe your zero-downtime strategy for rolling out config changes to Nginx ingress across 500+ services, when 20% of traffic is long-lived HTTP connections.
+2. Meta serves billions of requests per second. How would you design a distributed load-balancing system that guarantees tail latency below 100ms globally without relying on external CDNs?
+3. Apple services push iOS updates to billions of devices simultaneously. How do you design a staged rollout system that balances global consistency with regional reliability, while preventing thundering herd download storms?
+4. You’re managing 2000+ K8s nodes across clusters. Walk us through zero-downtime CRI upgrades without draining the entire node group.
+5. Flipkart’s growth team wants new APIs pushed globally, but compliance says “India only”. How do you architect region-aware routing, identity, and data isolation?
+6. How would you design zero-downtime rollouts for 100+ microservices running on EKS?
+7. Netflix runs multi-cloud. Describe your approach to cross-cloud routing, IAM, and secret syncing.
+
+
+Straight forward - 
+1. Walk me through what kube-proxy does when IPVS rules vanish mid-traffic.
+2. Terraform apply failed mid-way. Half the infra is live, half broken. Walk me through recovery.
+3. etcd corruption detected in a multi-master control plane. Walk through recovery without full downtime.
+4. How would you debug intermittent DNS failures inside an EKS cluster using CoreDNS?
+
